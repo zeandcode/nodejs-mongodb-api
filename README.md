@@ -1,6 +1,9 @@
 #nodejs-mongodb-api
 
-Here's a super simple drop-in API template for Node.js.
+Here's a super simple drop-in API template for Node.js. I've released this for a couple of use cases:
+
+* You're a Node.js beginner and you're interested in seeing how a simple REST API might look.
+* You need a quick project skeleton for a hack-day.
 
 ## Usage
 
