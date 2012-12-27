@@ -4,7 +4,7 @@ Here's a super simple drop-in API template for Node.js.
 
 ## Usage
 
-Clone this repo to a new project directory. You may also want to run 'rm -rf .git' and then 'git init' from within your project directory so Git doesn't try to push your new project to this repo!
+Clone this repo to a new project directory. You may also want to run `rm -rf .git` and then `git init` from within your project directory so Git doesn't try to push your new project to this repo!
 
 You'll need a few dependencies to use this, so run this on your command line within your project directory to get the tools you need:
 
