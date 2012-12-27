@@ -2,7 +2,6 @@ var db = require('../models/db');
 
 exports.getThing = function (req, res) {
   var queryType = req.route.path.replace('/','').split("/")[1];
-  console.log(queryType);
   db.getOneAndReturn(req.params.id, queryType, function (err, result) {
     if (err) {
       res.send(500, 'API Error: ' + err.toString());
