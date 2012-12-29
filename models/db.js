@@ -1,7 +1,8 @@
-var mongodb = require('mongodb'),
-    mongoserver = new mongodb.Server('localhost', 27017),
-    instance = new mongodb.Db('YOUR-DB-NAME-HERE', mongoserver, {safe : true}),
+var MongoClient = require('mongodb').MongoClient,
+    Server = require('mongodb').Server,
     ObjectID = require('mongodb').ObjectID;
+
+var CONSTRING = 'mongodb://YOUR-DOMAIN:YOUR-PORT/YOUR-DB-NAME';
 
 /*
  *
@@ -18,25 +19,20 @@ exports.getOneAndReturn = function (query, queryType, callback) {
   var formedQuery = {
     "_id" : new ObjectID.createFromHexString(query)
   };
-  instance.open(function (err, db) {
+  MongoClient.connect(CONSTRING, function (err, db) {
+    var collection = db.collection(queryType);
     if (err) {
       callback(err);
     }
-    db.collection(queryType, function (err, collection) {
+    collection.findOne(formedQuery, function (err, doc) {
       if (err) {
         callback(err);
       }
-      collection.findOne(formedQuery, function (err, doc) {
-        if (err) {
-          callback(err);
-        }
-        else {
-          // Casting doc['_id'] to string here prevents wierdness during testing
-          doc['_id'] = doc['_id'].toString();
-          callback(null, doc);
-        }
-        instance.close();
-      });
+      else {
+        // Casting doc['_id'] to string here prevents wierdness during testing
+        doc['_id'] = doc['_id'].toString();
+        callback(null, doc);
+      }
     });
   });
 };
@@ -53,25 +49,20 @@ exports.getOneAndReturn = function (query, queryType, callback) {
  */
 
 exports.postAndReturn = function (post, queryType, callback) {
-  instance.open(function (err, db) {
+  MongoClient.connect(CONSTRING, function (err, db) {
+    var collection = db.collection(queryType);
     if (err) {
       callback(err);
     }
-    db.collection(queryType, function (err, collection) {
+    collection.insert(post, {safe : true}, function (err, result) {
       if (err) {
         callback(err);
       }
-      collection.insert(post, {safe : true}, function (err, result) {
-        if (err) {
-          callback(err);
-        }
-        else {
-          // Casting doc['_id'] to string here prevents wierdness during testing
-          result[0]['_id'] = result[0]['_id'].toString();
-          callback(null, result[0]);
-        }
-        instance.close();
-      });
+      else {
+        // Casting doc['_id'] to string here prevents wierdness during testing
+        result[0]['_id'] = result[0]['_id'].toString();
+        callback(null, result[0]);
+      }
     });
   });
 };
@@ -88,23 +79,19 @@ exports.postAndReturn = function (post, queryType, callback) {
  */
 
 exports.getSelection = function (query, queryType, callback) {
-  instance.open(function (err, db) {
+  MongoClient.connect(CONSTRING, function (err, db) {
+    var collection = db.collection(queryType);
     if (err) {
       callback(err);
     }
-    db.collection(queryType, function (err, collection) {
+    console.dir(collection);
+    collection.find({}, {limit : parseInt(query, 10)}).toArray(function (err, result) {
       if (err) {
         callback(err);
       }
-      collection.find({}, {limit : parseInt(query, 10)}).toArray(function (err, result) {
-        if (err) {
-          callback(err);
-        }
-        else {
-          callback(null, result);
-        }
-        instance.close();
-      });
+      else {
+        callback(null, result);
+      }
     });
   });
 };
