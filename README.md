@@ -21,7 +21,7 @@ For now, you'll need to make sure any request is submitted with the `Content-Typ
 
 In `example-route.js`, you'll notice `var queryType` appears multiple times and is passed as the 2nd argument to each function in `db.js`.
 
-If your request URL is `http://www.example.com/api/thing/1/`, `queryType` will be set to `thing` (as this is your API endpoint) and this will be the collection name passed to MongoDB. Consequently, _every API endpoint maps to a MongoDB collection with the same name_.
+If your request URL is `http://www.example.com/api/v1/things`, `queryType` will be set to `things` (as this is your API endpoint) and this will be the collection name passed to MongoDB. Consequently, _every API endpoint maps to a MongoDB collection with the same name_.
 
 Wherever an ID is needed (e.g. when making a GET request), this maps to the MongoDB ObjectID of the document. For example: `http://www.example.com/api/thing/1/50dc6fd62956950000000001`.
 

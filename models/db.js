@@ -95,3 +95,35 @@ exports.getSelection = function (query, queryType, callback) {
     });
   });
 };
+
+/*
+ *
+ * exports.updateAndReturn(post, queryType, callback)
+ *
+ * Updates a single document in database.
+ *
+ * The function will pass an integer (1 or 0) as a second argument
+ * to the callback should the DB call be successful. 1 indicates success.
+ *
+ */
+
+exports.updateAndReturn = function (id, post, queryType, callback) {
+  var formedQuery = {
+    "_id" : new ObjectID.createFromHexString(id)
+  };
+  MongoClient.connect(CONSTRING, function (err, db) {
+    var collection = db.collection(queryType);
+    if (err) {
+      callback(err);
+    }
+    collection.update(formedQuery, {$set: post}, {w:1}, function (err, result) {
+      if (err) {
+        callback(err);
+      }
+      else {
+        console.log(result);
+        callback(null, result);
+      }
+    });
+  });
+};

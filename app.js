@@ -39,8 +39,9 @@ app.get('/morecontent', routes.index.moreContent);
 
 // API endpoints!
 
-app.get('/api/thing/1', routes.thing.listThing);
-app.get('/api/thing/1/:id', routes.thing.getThing);
-app.post('/api/thing/1', routes.thing.postThing);
+app.get('/api/v1/things', routes.thing.listThing);
+app.get('/api/v1/things/:id', routes.thing.getThing);
+app.post('/api/v1/things', routes.thing.postThing);
+app.put('/api/v1/things/:id', routes.thing.updateThing);
 
 server.listen(app.get('port'));
