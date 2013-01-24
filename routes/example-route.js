@@ -1,4 +1,4 @@
-var db = require('../models/db');
+var db = require('../controllers/db');
 
 exports.getThing = function (req, res) {
   var queryType = req.route.path.replace('/','').split("/")[2];

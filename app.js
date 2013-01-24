@@ -7,8 +7,8 @@ var express = require('express'),
 
 // Here's how I like to structure app.js...
 
-var models = {
-  db: require('./models/db')
+var controllers = {
+  db: require('./controllers/db')
 };
 
 var routes = {
